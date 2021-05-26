@@ -8,17 +8,113 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/magic-grid/dist/magic-grid.min.js" ></script>
 	<link rel="stylesheet" href="https://alecmccutcheon.github.io/Main/index.css">
-	<style id="stylish-2" class="stylish" type="text/css">
+	
+<style id="stylish-2" class="stylish" type="text/css">
 /* Today */
-#profile_img {
- background: url("icons/profile_img.png") center;
+header {
+  width: 92vw;
+  padding: 4vh 0;
+  position: fixed;
+  top: 0;
 }
 
-@media (hover: hover) {	
-#profile_img:hover, #profile_img:active {
-  background: url("icons/profile_img%20hover.png") center;
+header ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
 }
-	}
+
+header li {
+  float: right;
+}
+
+header li a {
+  display: block;
+  color: #fff;
+  text-align: center;
+  padding: 10px 10px;
+  margin-left: 3vw;
+  text-decoration: none;
+  position: relative;
+}
+
+header li img {
+  width: 30px;
+  height: auto;
+  padding: 10px 0;
+}
+
+#main {
+  width: 92vw;
+  padding: 0 4vw;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+  position: absolute;
+}
+
+#main div {
+  margin: 30px 0;
+  font-size: 55px;
+}
+
+#main button {
+  font-family: Coyote, sans-serif;
+  font-size: 18px;
+  padding: 12px 2vw;
+  border: 2px solid #ff3259;
+  border-radius: 50px;
+  color: #fff;
+  background: #ff3259;
+  width: 10vw;
+  transition: 0.4s ease-in-out;
+}
+
+#main button:hover {
+  transform: scale(1.06);
+  background: #ff4366;
+  border: 2px solid #ff4366;
+  cursor: pointer;
+}
+
+#main button:active {
+  transform: scale(0.6);
+  background: #ff1640;
+  border: 2px solid #ff1640;
+}
+
+#main span {
+  font-size: 19px;
+  color: #c8c8c8;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  text-align: center;
+  top: 45px;
+  padding-right: 15px;
+
+ 
+}
+
+.dropdown-content a {
+  color: white;
+  text-decoration: none;
+  right: 15px;
+  background-color: rgba(33, 33, 33, 0.5);
+  font-size: 19px;
+  display: block;
+  padding: 5px 16px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a:hover, .dropdown-content a:active {background-color: #ddd; !important}
+
+#dropdown:hover .dropdown-content,  #dropdown:active .dropdown-content {display: block; !important}
 	
   @media print {
     .ms-editor-squiggler {
