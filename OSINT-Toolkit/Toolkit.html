@@ -1,0 +1,588 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        function Settingsbutton() {
+            var x = document.getElementById("Settings");
+            if (x.style.display === "none") {
+                x.style.display = "inline";
+            } else {
+                x.style.display = "none";
+            }
+        }
+
+        function Notesbutton() {
+            var x = document.getElementById("Notes");
+            if (x.style.display === "none") {
+                x.style.display = "inline";
+            } else {
+                x.style.display = "none";
+            }
+        }
+
+        function RunSelected() {
+            if (document.getElementById("Geobox").checked == true) {
+                api('Geo-info Scan');
+            } else {
+                document.getElementById("info").style.display = 'none';
+            }
+            if (document.getElementById("Portbox").checked == true) {
+                api(api('Port Scan'));
+            } else {
+                document.getElementById("result").style.display = 'none';
+            }
+            if (document.getElementById("Mapbox").checked == true) {
+                api(api('Visual NS Map'));
+            } else {
+                document.getElementById("map").style.display = 'none';
+            }
+        }
+
+        function Checkbutton() {
+            if (commanportschecked == false) {
+                commanportschecked = true;
+                myForm = document["getElementById"]("portscan");
+                for (i = 0; i < myForm["port_array[]"].length; i++) {
+                    myForm["port_array[]"][i].checked = true;
+                }
+            } else {
+                commanportschecked = false;
+                myForm = document["getElementById"]("portscan");
+                for (i = 0; i < myForm["port_array[]"].length; i++) {
+                    myForm["port_array[]"][i].checked = false;
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div style="background-color: #FFFFFF; padding-left: 20px; padding-right: 20px; padding-bottom: 20px;">
+        <p>
+            <strong style="color:black;">IP/Domain Geo Information, Visual NS Map & Port Scanner (WIP)</strong>
+        </p>
+        <p>Default IP: Your Pubic IPv4 | Default Ports: Commonly Used | Default Settings View: Hidden</p>
+        <h4 style="color:black;"> Domain or IP: <input id='ip' name="ip" type="text" value="Loading..." spellcheck="false"/> </h4>
+        <button onclick="Settingsbutton()">Show/Hide Settings.</button>
+        <div id='Settings' style="display:none">
+            <button onclick="Notesbutton()">Show/Hide Notes.</button>
+            <table>
+                <p></p>
+                <b style="color:black; display:block">Custom Ports:</b>
+                <p></p>
+                <input name="port" type="text" value="" spellcheck="false"/>
+                <p></p>
+            </table>
+            <table>
+                <b style="color:black;">Range Of Ports:</b>
+                <p></p>
+                <tr>
+                    </td>
+                    <td align="left">
+                        <input type="text" id="port_start" size="4" maxlength="6" spellcheck="false"> - Starting port<br><br><input type="text" id="port_end" size="4" maxlength="6" spellcheck="false"> - Ending port
+                    </td>
+                </tr>
+            </table>
+            <p></p>
+            <form id='portscan'>
+                <b style="color:black;">Common Ports:</b>
+                <p></p>
+                <table id='portcheckboxs'>
+                    <tbody>
+                        <tr>
+                            <td align="left" nowrap="">
+                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" id='test' name="port_array[]" value="21"> FTP/file server open/vulnerable (port 21)</font>
+                            </td>
+                            <td align="left" nowrap="">
+                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="23"> TELNET service open/vulnerable(port 23)</font>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" nowrap="">
+                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="25"> SMTP relay vulnerable (port 25)</font>
+                            </td>
+                            <td align="left" nowrap="">
+                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="110"> POP3/mail server vulnerable (port 110)</font>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" nowrap="">
+                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="194"> IRC relay vulnerable (port 194)</font>
+                            </td>
+                            <td align="left" nowrap="">
+                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="143"> IMAP/mail server vulnerable (port 143)</font>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" nowrap="">
+                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="80"> HTTP/web server vulnerable (port 80)</font>
+                            </td>
+                            <td align="left" nowrap="">
+                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="445"> Scan for Windows file sharing susceptibility (port 445)</font>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" nowrap="">
+                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="139"> Scan for NETBIOS susceptibility (port 139)</font>
+                            </td>
+                            <td align="left" nowrap="">
+                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="8080"> Scan for firewall remote login (port 8080)</font>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" nowrap="">
+                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="3389"> Microsoft Remote Desktop vulnerable (port 3389)</font>
+                            </td>
+                            <td align="left" nowrap="">
+                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="5900"> VNC Remote Desktop vulnerable (port 5900)</font>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" nowrap="">
+                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="1723"> VPN (PPTP) service open/vulnerable (port 1723)</font>
+                            </td>
+                            <td align="left" nowrap="">
+                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="1433"> Microsoft SQL Server open/vulnerable (port 1433)</font>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" nowrap="">
+                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="1521"> Oracle database service open/vulnerable (port 1521) .</font>
+                            </td>
+                            <td align="left" nowrap="">
+                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="3306"> MySQL database open/vulnerable (port 3306)</font>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center">
+                                <font size="-1" face="Arial"><input type="button" value="Check/Uncheck All" onclick="Checkbutton()" /></font>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+            <p> </p>
+        </div>
+        <input id='mainbutton' type="button" value="Run Selected" onclick="RunSelected()" /> [ Geo-Info Scan <input type="checkbox" id="Geobox" value="" checked> | Visual NS Map <input type="checkbox" id="Mapbox" value="" checked> | Port Scan <input type="checkbox" id="Portbox" value="" checked> ]
+        <ul>
+            <textarea spellcheck="false" id="result" style="min-width:580px;min-height:400px;display:none;"></textarea> <textarea spellcheck="false" id="info" style="min-width:580px;height:400px;display:none;"></textarea>
+			<br>
+			<input type="button" id='InfoDownload' value="Download Geo-Info" onclick="doDownload(document.getElementById('info').value, 'Geo-Info (' + inputtarget + ').log')" style="display:none;" /><input type="button" id='ScanDownload' value="Download Report" onclick="doDownload(document.getElementById('result').value, 'Port Scan Repot (' + inputtarget + ').log')" style="display:none;" />
+		</ul>
+    </div>
+    <a id='maplink' href="" target="_blank">
+        <img id='map' src='' style="max-width:1000px;display:none;">
+    </a>
+    <div id='Notes' style="display:none">
+        <p>Then you run a "Port scan" or a "full scan" it will freeze the tab while it fetchs the Port data so the smaller the scan the better.</p>
+        <p>You can click the Map to view it in it's Full Size</p>
+    </div>
+
+    <script>
+        function Load() {
+
+            commanportschecked = false;
+			LoadBalancerMem_1 = 1;
+			LoadBalancerMem_2 = 1;
+			inputtarget = $("input[name='ip']").val();
+            Checkbutton()
+
+            $.ajax({
+                type: "GET",
+                url: "https://api.ipify.org",
+                dataType: "text",
+                success: function(data) {
+                    document.getElementById("ip").value = data
+                }
+            });
+			
+            $.ajax({
+                type: "GET",
+                url: "https://cors-anywhere-proxy.mccutcheon.workers.dev/?https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv",
+                dataType: "text",
+                success: function(data) {
+                    PortInfoRaw = data
+                }
+            });
+
+        }
+		
+				
+		Load();
+		
+		function Proxy_Load_Balancer() {
+		
+		/* 
+		If you have cloned this project Please create your own proxy servers(CloudFlare Workers) to use in this loop:
+		My proxy Servers will only work at my domain anyway, But for Testing Only they will also work in a local html file off a computer.
+		*/
+		
+			if (LoadBalancerMem_1 == 1) {
+			
+				LoadBalancerMem_1 = 2;
+				Proxy = 'https://cors-anywhere-proxy.mccutcheon.workers.dev/' // Proxy Server 1
+				return
+			}
+			
+			if (LoadBalancerMem_1 == 2) {
+			
+				LoadBalancerMem_1 = 3;
+				Proxy = 'https://cors-anywhere-proxy.mccutcheon2.workers.dev/' // Proxy Server 2
+				return
+			}
+			
+			if (LoadBalancerMem_1 == 3) {
+			
+				LoadBalancerMem_1 = 4;
+				Proxy = 'https://cors-anywhere-proxy2.mccutcheon.workers.dev/' // Proxy Server 3
+				return
+			}
+			
+			if (LoadBalancerMem_1 == 4) {
+			
+				LoadBalancerMem_1 = 5;
+				Proxy = 'https://cors-anywhere-proxy2.mccutcheon2.workers.dev/' // Proxy Server 4
+				return
+			}
+			
+			if (LoadBalancerMem_1 == 5) {
+			
+				LoadBalancerMem_1 = 6;
+				Proxy = 'https://cors-anywhere-proxy3.mccutcheon.workers.dev/' // Proxy Server 5
+				return
+			}
+			
+			if (LoadBalancerMem_1 == 6) {
+			
+				LoadBalancerMem_1 = 1;
+				Proxy = 'https://cors-anywhere-proxy3.mccutcheon2.workers.dev/' // Proxy Server 6
+				return
+			}
+		
+		}
+
+        function sleep(milliseconds) {
+            let timeStart = new Date().getTime();
+            while (true) {
+                let elapsedTime = new Date().getTime() - timeStart;
+                if (elapsedTime > milliseconds) {
+                    break;
+                }
+            }
+        }
+
+        /* Code for Running Selected when Enter is Pressed.
+
+        document.addEventListener("keyup", function(event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                // Trigger the button element with a click
+                document.getElementById("mainbutton").click();
+            }
+        });
+
+        */
+
+		function doDownload(str, name) {
+              function dataUrl(data) {
+                return "data:x-application/xml;charset=utf-8," + escape(data);
+              }
+            var downloadLink = document.createElement("a");
+            downloadLink.href = dataUrl(str);
+            downloadLink.download = name;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+			
+        function PortScan(target, port) {
+			
+			Proxy_Load_Balancer();
+			
+			//if (LoadBalancerMem_2 == 1) {
+			 //LoadBalancerMem_2 = 2
+			 secs = ((Port_Count) * 800) / 1000
+			 sleep(800)
+			fetch(Proxy + "?https://www.ipfingerprints.com/scripts/getPortsInfo.php", {
+  "headers": {
+    "accept": "application/json, text/javascript, */*; q=0.01",
+    "accept-language": "en-US,en;q=0.9",
+    "content-type": "application/x-www-form-urlencoded",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-origin",
+    "sec-gpc": "1",
+    "x-requested-with": "XMLHttpRequest"
+  },
+  "referrer": "https://www.ipfingerprints.com/portscan.php",
+  "referrerPolicy": "strict-origin-when-cross-origin",
+  "body": "remoteHost=" + target + "&start_port=" + port + "&end_port=" + port + "&normalScan=No&scan_type=connect&ping_type=none",
+  "method": "POST",
+  "mode": "cors",
+}).then(res => {
+                // allows to read all headers (even forbidden headers like set-cookies)
+                const headers = JSON.parse(res.headers.get('cors-received-headers'))
+                return res.json()
+            }).then(res => {
+				
+				rawjson = res
+				MAIN = (rawjson.portScanInfo).split("\" style=\"font-weight: bold;\">")[1]
+                portstatus = ((MAIN).split("</span>")[0]).trim()
+				PortService = (((MAIN).split("</span>")[1]).split("<br />")[0]).trim()
+					sleep(100)
+					var tmp = $("#result").val()
+					var tmpstr = port + "/tcp" + " : " + portstatus + " : " + PortService
+					$("#result").val(tmp + "\n" + tmpstr)
+
+					if (document.getElementById('result').clientHeight < document.getElementById('result').scrollHeight) {
+						document.getElementById('result').style.height = document.getElementById('result').scrollHeight + 'px'
+					}
+
+					Ports_Displayed = Ports_Displayed + 1;
+					
+					if ((Ports_Displayed) == (Port_Count)) {
+						var tmp = $("#result").val()
+						console.log('done'); 
+						$("#result").val(tmp + "\n \nScan Complete. (" + secs + " sec.)");
+                        document.getElementById('result').style.height = document.getElementById('result').scrollHeight + 'px';
+						document.getElementById('result').style.height = (document.getElementById('result').clientHeight + 5) + 'px';
+						inputtarget = $("input[name='ip']").val();
+						document.getElementById("ScanDownload").style.display = 'inline';
+						}
+            })
+			//}
+			
+			/*
+			 LoadBalancerMem_2 = 1
+			 secs = ((Port_Count) * 400) / 1000
+			 sleep(400)
+            fetch(Proxy + '?https://networkappers.com/api/port.php?ip=' + target + '&port=' + port, {
+                method: 'get',
+                headers: {
+                    'x-foo': 'bar',
+                    'x-bar': 'foo',
+                    'x-cors-headers': JSON.stringify({
+                        // allows to send forbidden headers
+                        'Referer': 'https://www.networkappers.com/tools/open-port-checker'
+
+                    })
+                }
+            }).then(res => {
+                // allows to read all headers (even forbidden headers like set-cookies)
+                const headers = JSON.parse(res.headers.get('cors-received-headers'))
+                return res.json()
+            }).then(res => {
+
+                var raw = (res.msg).split("</i>")[1]
+                var portstatus = ((raw).split("<b>")[1]).split("</b>")[0];
+				
+					PortService = (((PortInfoRaw).split(port + ',tcp,')[1]).split('\r\n')[1]).split(',')[0]
+
+					if (port == "143") {
+						PortService = "imap"
+					}
+					if (PortService == "") {
+						PortService = "unknown"
+					}
+					sleep(100)
+					var tmp = $("#result").val()
+					var tmpstr = port + "/tcp" + " : " + portstatus + " : " + PortService
+					$("#result").val(tmp + "\n" + tmpstr)
+
+					if (document.getElementById('result').clientHeight < document.getElementById('result').scrollHeight) {
+						document.getElementById('result').style.height = document.getElementById('result').scrollHeight + 'px'
+					}
+
+					Ports_Displayed = Ports_Displayed + 1;
+					
+					if (Ports_Displayed == Port_Count) {
+						var tmp = $("#result").val()
+						console.log('done'); 
+						$("#result").val(tmp + "\n \nScan Complete. (" + secs + " sec.)");
+                        document.getElementById('result').style.height = document.getElementById('result').scrollHeight + 'px';
+						document.getElementById('result').style.height = (document.getElementById('result').clientHeight + 5) + 'px';
+						inputtarget = $("input[name='ip']").val();
+						document.getElementById("ScanDownload").style.display = 'inline';
+						}
+            })
+			*/
+
+        }
+
+        function api(mode) {
+
+            if ($("input[name='ip']").val() == '') {
+                document.getElementById('ip').value = "Query Failed: invalid query";
+                return
+            }
+
+            Proxy_Load_Balancer()
+			
+			document.getElementById("ScanDownload").style.display = 'none';
+			document.getElementById("InfoDownload").style.display = 'none';
+            document.getElementById("map").style.display = 'none';
+            document.getElementById("info").style.display = 'none';
+            document.getElementById("result").style.display = 'none';
+            document.getElementById('result').style.height = '400px'
+            var endpoint = Proxy + '?http://ip-api.com/json/' + $("input[name='ip']").val() + '?fields=66846719';
+            var ipapi = 'none'
+            var xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function() {
+
+                if (this.readyState == 4 && this.status == 200) {
+
+                    var response = JSON.parse(this.responseText);
+                    if (response.status !== 'success') {
+                        ipapi = 'Query Failed: ' + response.message;
+                        document.getElementById('ip').value = ipapi
+                        return
+
+                    }
+                    ipapi = response.query
+                    reverseip = response.reverse
+                    if (mode == 'Geo-info Scan') {
+                        document.getElementById("info").style.display = 'inline';
+                        document.getElementById("info").value = "";
+                        document.getElementById("info").value = "-- IP/Domain Geo-Info --" + "\n \n" + "Query: " + response.query + "\n" + "Continent: " + response.continent + " | Code: " + response.continentCode + "\n" + "Country: " + response.country + " | Code: " + response.countryCode + "\n" + "RegionName: " + response.regionName + " | Code: " + response.region + "\n" + "City: " + response.city + " | Code: " + response.zip + "\n" + "Coordinates: " + "Lat (" + response.lat + ") | Lon (" + response.lon + ")" + "\n" + "TimeZone: " + response.timezone + "\n" + "Offset: " + response.offset + "\n" + "Currency: " + response.currency + "\n" + "ISP: " + response.isp + "\n" + "Org: " + response.org + "\n" + "As: " + response.as + "\n" + "Reverse: " + response.reverse + "\n" + "Mobile: " + response.mobile + "\n" + "Proxy: " + response.proxy + "\n" + "Hosting: " + response.hosting
+						inputtarget = $("input[name='ip']").val();
+						document.getElementById("InfoDownload").style.display = 'inline';
+                    }
+                    //map start
+                    if (mode == 'Visual NS Map') {
+                        document.getElementById("map").style.display = 'inline';
+                        document.getElementById("map").src = "https://gfx.robtex.com/gfx/graph.png?dns=" + $("input[name='ip']").val()
+                        document.getElementById("maplink").href = document.getElementById("map").src
+
+                        setTimeout(() => {
+
+                            if (document.getElementById("map").clientHeight == 30) {
+
+                                document.getElementById("map").src = "https://gfx.robtex.com/gfx/graph.png?dns=" + "www." + $("input[name='ip']").val()
+                                document.getElementById("maplink").href = document.getElementById("map").src
+
+                                setTimeout(() => {
+
+                                    if (document.getElementById("map").clientHeight == 30) {
+
+                                        document.getElementById("map").src = "https://gfx.robtex.com/gfx/graph.png?dns=" + ipapi
+                                        document.getElementById("maplink").href = document.getElementById("map").src
+
+                                    }
+                                }, 10000);
+                            }
+
+                        }, 10000);
+
+                        //map end
+                    }
+
+                    if (mode == 'Port Scan') {
+					
+						Ports_Displayed = 0;
+                        document.getElementById("result").style.display = 'inline';
+                        document.getElementById("result").value = "";
+                        FormatScan(ipapi, $("input[name='port']").val());
+                    }
+                    var myHeaders = new Headers();
+                    myHeaders.append("apikey", "rLCe4ziWCuS84RvCPyVVqO0ndTUQxhWp");
+
+                    var requestOptions = {
+                        method: 'GET',
+                        redirect: 'follow',
+                        headers: myHeaders
+                    };
+
+                    return
+
+                }
+            };
+
+            xhr.open('GET', endpoint, true);
+            xhr.send();
+        }
+
+        function FormatScan(ipaddr, portnumber) {
+
+            ip = ipaddr;
+            port = portnumber;
+
+            if (ip == "" || !ip.match(/([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/)) {
+                alert("IP Format Error.");
+                return
+            }
+            plist = []
+            if (port.indexOf('-') > 0) {
+                tmp = port.split('-');
+                for (var i = tmp[0]; i <= tmp[1]; i++) {
+                    plist.push(i)
+                }
+            } else if (port.indexOf(',') > 0) {
+                plist = port.split(',');
+            }
+
+            var portcheckboxs = document.getElementById("portcheckboxs");
+            var chks = portcheckboxs.getElementsByTagName("INPUT");
+
+            for (var i = 0; i < chks.length; i++) {
+                if (chks[i].checked) {
+                    plist.push(chks[i].value);
+                }
+            }
+
+            low = document.getElementById("port_start").value
+            high = document.getElementById("port_end").value
+
+            if (high !== "" && low !== "") {
+                for (var i = low; i <= high; i++) {
+                    plist.push(i);
+                }
+
+            }
+            var plist = plist.map(Number);
+            let UniquePlist = [...new Set(plist)];
+            UniquePlist.sort((a, b) => a - b)
+            dateandtime = new Date().toLocaleString();
+            if (/[a-z]/i.test($("input[name='ip']").val()) == true) {
+                reportdomain = " " + $("input[name='ip']").val()
+            } else {
+                reportdomain = ''
+            }
+            if (UniquePlist.length !== 0) {
+                document.getElementById("result").value = "-- IP/Domain Port Scan --" + "\n \n" + "Starting Scan (Mixed Servers) at " + dateandtime + "\n \n The HMTL Site Will Be Frozen While The Scan Is Loading. \n If you would like to make sure it's running and not dead, \n you can Right Click and open the 'Inspect' menu, \n then open the 'Network' tab to see the live scan activity \n Do the above before running the scan. \n If you are prompted to 'Wait' or 'Exit Page', Click 'Wait'. \n\n Once this message clears, the site will be responsive, \n But the scan report might still be populating. \n\n PLEASE WAIT...";
+                Port_Count_Raw = UniquePlist.length;
+				Port_Count = Port_Count_Raw;
+				console.log(UniquePlist)
+                setTimeout(() => {
+
+                    for (var i in UniquePlist) {
+                        if (UniquePlist[i] != "") {
+                            PortScan(ip, UniquePlist[i]);
+                         
+
+                        }
+                    }
+				
+                    document.getElementById("result").value = "-- IP/Domain Port Scan --" + "\n \n" + "Starting Scan (networkappers.com) at " + dateandtime + " \n\nScan report for:" + reportdomain + " (" + ip + ") \n\n [ PORT : STATE : SERVICE ] \n";
+					
+                    if (document.getElementById('result').clientHeight < document.getElementById('result').scrollHeight) {
+                        document.getElementById('result').style.height = document.getElementById('result').scrollHeight + 'px'
+                    }
+
+                }, 750);
+
+            } else {
+                document.getElementById("result").style.display = 'none';
+                console.log('No Ports Selected to Scan.')
+            }
+        }
+    </script>
+
+</body>
+
+</html>
