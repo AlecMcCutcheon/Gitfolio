@@ -19,112 +19,7 @@
   background: url("icons/profile_img%20hover.png") center;
 }
 	}
-
-header {
-  width: 92vw;
-  padding: 4vh 0;
-  position: fixed;
-  top: 0;
-}
-
-header ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  font-size: 16px;
-}
-
-header li {
-  float: right;
-}
-
-header li a {
-  display: block;
-  color: #fff;
-  text-align: center;
-  padding: 10px 10px;
-  margin-left: 3vw;
-  text-decoration: none;
-  position: relative;
-}
-
-header li img {
-  width: 30px;
-  height: auto;
-  padding: 10px 0;
-}
-
-#main {
-  width: 92vw;
-  padding: 0 4vw;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  z-index: 2;
-  position: absolute;
-}
-
-#main div {
-  margin: 30px 0;
-  font-size: 55px;
-}
-
-#main button {
-  font-family: Coyote, sans-serif;
-  font-size: 18px;
-  padding: 12px 2vw;
-  border: 2px solid #ff3259;
-  border-radius: 50px;
-  color: #fff;
-  background: #ff3259;
-  width: 10vw;
-  transition: 0.4s ease-in-out;
-}
-
-#main button:hover {
-  transform: scale(1.06);
-  background: #ff4366;
-  border: 2px solid #ff4366;
-  cursor: pointer;
-}
-
-#main button:active {
-  transform: scale(0.6);
-  background: #ff1640;
-  border: 2px solid #ff1640;
-}
-
-#main span {
-  font-size: 19px;
-  color: #c8c8c8;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  text-align: center;
-  top: 45px;
-  padding-right: 15px;
-
- 
-}
-
-.dropdown-content a {
-  color: white;
-  text-decoration: none;
-  right: 15px;
-  background-color: rgba(33, 33, 33, 0.5);
-  font-size: 19px;
-  display: block;
-  padding: 5px 16px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-
-.dropdown-content a:hover, .dropdown-content a:active {background-color: #ddd; !important}
-
-#dropdown:hover .dropdown-content,  #dropdown:active .dropdown-content {display: block; !important}
-
+	
   @media print {
     .ms-editor-squiggler {
         display:none !important;
@@ -480,25 +375,50 @@ box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
     </script>
 </head>
 
+<div id="main">
+    <header>
+      <ul>
+        <li style="float:left;">
+          <img src="https://img.icons8.com/ios-filled/344/ffffff/my-computer--v1.png">
+        </li>
+        <li><a class="swipe" href="mailto:alecraymccutcheon@gmail.com" tabindex="4">Contact</a></li>
+		<li id='dropdown'><a class="swipe" tabindex="3">Test</a>
+			<div class="dropdown-content">
+			<a href="OSINT-Toolkit/index.html">Toolkit</a>
+			<a href="">Link 2</a>
+			<a href="#">Link 3</a>
+			</div>
+		</li>
+		<li id='dropdown'><a class="swipe" tabindex="3">Test2</a>
+			<div class="dropdown-content">
+			<a href="#">Link 1</a>
+			<a href="#">Link 2</a>
+			<a href="#">Link 3</a>
+			</div>
+		</li>
+		<li><a class="swipe" href="https://alecmccutcheon.github.io/Main/" tabindex="4">Main</a></li>
+      </ul>
+    </header>
+	</div>
 <body>
-    <div style="background-color: #FFFFFF; padding-left: 20px; padding-right: 20px; padding-bottom: 20px;">
+    <div id="work">
         <p>
             <strong style="color:black;">IP/Domain Geo Information, Visual NS Map & Port Scanner (WIP)</strong>
         </p>
         <p>Default IP: Your Pubic IPv4 | Default Ports: Commonly Used | Default Settings View: Hidden</p>
-        <h4 style="color:black;"> Domain or IP: <input id='ip' name="ip" type="text" value="Loading..." spellcheck="false"/> </h4>
+        <h4> Domain or IP: <input id='ip' name="ip" type="text" value="Loading..." spellcheck="false"/> </h4>
         <button onclick="Settingsbutton()">Show/Hide Settings.</button>
         <div id='Settings' style="display:none">
             <button onclick="Notesbutton()">Show/Hide Notes.</button>
             <table>
                 <p></p>
-                <b style="color:black; display:block">Custom Ports:</b>
+                <b style="display:block">Custom Ports:</b>
                 <p></p>
                 <input name="port" type="text" value="" spellcheck="false"/>
                 <p></p>
             </table>
             <table>
-                <b style="color:black;">Range Of Ports:</b>
+                <b">Range Of Ports:</b>
                 <p></p>
                 <tr>
                     </td>
@@ -509,7 +429,7 @@ box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
             </table>
             <p></p>
             <form id='portscan'>
-                <b style="color:black;">Common Ports:</b>
+                <b>Common Ports:</b>
                 <p></p>
                 <table id='portcheckboxs'>
                     <tbody>
@@ -593,7 +513,6 @@ box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
 			<br>
 			<input type="button" id='InfoDownload' value="Download Geo-Info" onclick="doDownload(document.getElementById('info').value, 'Geo-Info (' + inputtarget + ').log')" style="display:none;" /><input type="button" id='ScanDownload' value="Download Report" onclick="doDownload(document.getElementById('result').value, 'Port Scan Repot (' + inputtarget + ').log')" style="display:none;" />
 		</ul>
-    </div>
     <a id='maplink' href="" target="_blank">
         <img id='map' src='' style="max-width:1000px;display:none;">
     </a>
@@ -601,7 +520,7 @@ box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
         <p>Then you run a "Port scan" or a "full scan" it will freeze the tab while it fetchs the Port data so the smaller the scan the better.</p>
         <p>You can click the Map to view it in it's Full Size</p>
     </div>
-
+</div>
     <script>
         function Load() {
 
