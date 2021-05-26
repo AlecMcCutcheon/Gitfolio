@@ -489,15 +489,25 @@ box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
 	</div>
 <body>
 	<div id="profile">
-	<div id="username"> </div>
+	  <div id="profile_img""></div>
+      <div id="username"><a>Default IP: Your Pubic IPv4</a><a>Default Ports: Commonly Used</a><a>Default Settings View: Hidden</a></div>
+      <div id="userbio" style="display: none;">undefined</div>
+      <div id="about">
+                <span style="display:none;"><i class="fas fa-circle-notch"></i> &nbsp; Geo-Info Scan <input type="checkbox" id="Geobox" value="" checked> </span>
+                <span style="display:block;"><i class="fas fa-circle-notch"></i> &nbsp;&nbsp; Visual NS Map <input type="checkbox" id="Mapbox" value="" checked> </span>
+                <span style="display:block;"><i class="fas fa-circle-notch"></i> &nbsp;&nbsp; Port Scan <input type="checkbox" id="Portbox" value="" checked> </a></span>
+                <div class="socials">
+                <span style="display:block;"><a href="https://github.com/AlecMcCutcheon/Main/tree/main/OSINT-Toolkit/Domain-IP_Tools" target="_blank" class="socials"><i class="fab fa-github"></i></a> <input id='mainbutton' type="button" value="Run Selected" onclick="RunSelected()" /> </span>
+                </div>
+                </div>
 	</div>
 <div id="display">
     <div id="work">
 	    <h1>Domain/IP Tools.</h1>
         <p>
-            <strong style="color:black;">IP/Domain Geo Information, Visual NS Map & Port Scanner (WIP)</strong>
+            <strong >- IP/Domain Geo Info, NS Map & Port Scanner (WIP)</strong>
         </p>
-        <p>Default IP: Your Pubic IPv4 | Default Ports: Commonly Used | Default Settings View: Hidden</p>
+        <p></p>
         <h4> Domain or IP: <input id='ip' name="ip" type="text" value="Loading..." spellcheck="false"/> </h4>
         <button onclick="Settingsbutton()">Show/Hide Settings.</button>
         <div id='Settings' style="display:none">
@@ -599,7 +609,6 @@ box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
             </form>
             <p> </p>
         </div>
-        <input id='mainbutton' type="button" value="Run Selected" onclick="RunSelected()" /> [ Geo-Info Scan <input type="checkbox" id="Geobox" value="" checked> | Visual NS Map <input type="checkbox" id="Mapbox" value="" checked> | Port Scan <input type="checkbox" id="Portbox" value="" checked> ]
         <ul>
             <textarea spellcheck="false" id="result" style="min-width:580px;min-height:400px;display:none;"></textarea> <textarea spellcheck="false" id="info" style="min-width:580px;height:400px;display:none;"></textarea>
 			<br>
