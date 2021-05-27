@@ -497,10 +497,10 @@ box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
       <div id="username" style="min-width:300px;"><span style="display:block; font-size: 26px;">Domain/IP Tools.</span><br><a style="font-size: 14px; text-decoration: none !important;">Default IP: Your Pubic IPv4</a><br><a style="font-size: 14px; text-decoration: none !important;">Default Ports: Commonly Used</a><br><a style="font-size: 14px; text-decoration: none !important;">Default Settings View: Hidden</a></div>
       <div id="about">
 				<span style="display:block;"><i class="fas fa-circle-notch"></i> &nbsp;&nbsp; Geo-Info Scan <input type="checkbox" id="Geobox" value="" checked> </span>
-                <span style="display:block;"><i class="fas fa-circle-notch"></i> &nbsp;&nbsp; Visual NS Map <input type="checkbox" id="Mapbox" value="" checked> </span>
+                <span style="display:block;"><i class="fas fa-circle-notch"></i> &nbsp;&nbsp; Visual NS Map <input type="checkbox" id="Mapbox" value=""> </span>
                 <span style="display:block;"><i class="fas fa-circle-notch"></i> &nbsp;&nbsp; Port Scan <input type="checkbox" id="Portbox" value="" checked> </span>
                 <div class="socials">
-                <span style="display:block;" onclick="RunSelected()"><button id='mainbutton'/>Run Selected</button></span>
+                <span style="display:block; " onclick="RunSelected()"><button id='mainbutton'/>Run Selected</button></span>
                 </div>
                 </div>
 	</div>
@@ -612,9 +612,22 @@ box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
             <p> </p>
         </div>
         <ul>
-            <textarea spellcheck="false" id="result" style="min-width:580px;min-height:400px;display:none;"></textarea> <textarea spellcheck="false" id="info" style="min-width:580px;height:400px;display:none;"></textarea>
+		 <div class="projects" id="work_section" style="position: relative;">
+			<a>
+			<section>
+			<textarea spellcheck="false" id="result" class='autoExpand' style="width: calc(100%); resize: none; display: flex; " autofocus></textarea>
+			<input type="button" id='ScanDownload' value="Download Report" onclick="doDownload(document.getElementById('result').value, 'Port Scan Repot (' + inputtarget + ').log')" style="display:none;" />
+			</section>
+			</a>
+			<a>
+			<section>
+			<textarea spellcheck="false" id="info" class='autoExpand' style="width: calc(100%); resize: none; display: flex; " autofocus></textarea>
 			<br>
-			<input type="button" id='InfoDownload' value="Download Geo-Info" onclick="doDownload(document.getElementById('info').value, 'Geo-Info (' + inputtarget + ').log')" style="display:none;" /><input type="button" id='ScanDownload' value="Download Report" onclick="doDownload(document.getElementById('result').value, 'Port Scan Repot (' + inputtarget + ').log')" style="display:none;" />
+			<input type="button" id='InfoDownload' value="Download Geo-Info" onclick="doDownload(document.getElementById('info').value, 'Geo-Info (' + inputtarget + ').log')" style="display:none;" />
+			</section>
+			</a> 
+			</div>
+			<br>
 		</ul>
     <a id='maplink' href="" target="_blank">
         <img id='map' src='' style="max-width:1000px;display:none;">
@@ -656,6 +669,38 @@ box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
 		
 				
 		Load();
+		
+function getScrollHeight(elm){
+  var savedValue = elm.value
+  elm.value = ''
+  elm._baseScrollHeight = elm.scrollHeight
+  elm.value = savedValue
+}
+
+function onExpandableTextareaInput({ target:elm }){
+  // make sure the input event originated from a textarea and it's desired to be auto-expandable
+  if( !elm.classList.contains('autoExpand') || !elm.nodeName == 'TEXTAREA' ) return
+  
+  var minRows = elm.getAttribute('data-min-rows')|0, rows;
+  !elm._baseScrollHeight && getScrollHeight(elm)
+
+  elm.rows = minRows
+  rows = Math.ceil((elm.scrollHeight - elm._baseScrollHeight) / 16)
+  elm.rows = minRows + rows
+}
+
+// global delegated event listener
+document.addEventListener('input', onExpandableTextareaInput)
+
+
+function triggerInput(element) {
+    var event = new Event('input', {
+        'bubbles': true,
+        'cancelable': true
+    });
+
+    element.dispatchEvent(event);
+}
 		
 		function Proxy_Load_Balancer() {
 		
@@ -781,20 +826,14 @@ box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
 					var tmp = $("#result").val()
 					var tmpstr = port + "/tcp" + " : " + portstatus + " : " + PortService
 					$("#result").val(tmp + "\n" + tmpstr)
-
-					if (document.getElementById('result').clientHeight < document.getElementById('result').scrollHeight) {
-						document.getElementById('result').style.height = document.getElementById('result').scrollHeight + 'px'
-					}
-
 					Ports_Displayed = Ports_Displayed + 1;
 					
 					if ((Ports_Displayed) == (Port_Count)) {
 						var tmp = $("#result").val()
 						console.log('done'); 
 						$("#result").val(tmp + "\n \nScan Complete. (" + secs + " sec.)");
-                        document.getElementById('result').style.height = document.getElementById('result').scrollHeight + 'px';
-						document.getElementById('result').style.height = (document.getElementById('result').clientHeight + 5) + 'px';
 						inputtarget = $("input[name='ip']").val();
+						triggerInput(document.getElementById("result"))
 						document.getElementById("ScanDownload").style.display = 'inline';
 						}
             })
@@ -871,7 +910,6 @@ box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
             document.getElementById("map").style.display = 'none';
             document.getElementById("info").style.display = 'none';
             document.getElementById("result").style.display = 'none';
-            document.getElementById('result').style.height = '400px'
             var endpoint = Proxy + '?http://ip-api.com/json/' + $("input[name='ip']").val() + '?fields=66846719';
             var ipapi = 'none'
             var xhr = new XMLHttpRequest();
@@ -894,6 +932,7 @@ box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
                         document.getElementById("info").value = "";
                         document.getElementById("info").value = "-- IP/Domain Geo-Info --" + "\n \n" + "Query: " + response.query + "\n" + "Continent: " + response.continent + " | Code: " + response.continentCode + "\n" + "Country: " + response.country + " | Code: " + response.countryCode + "\n" + "RegionName: " + response.regionName + " | Code: " + response.region + "\n" + "City: " + response.city + " | Code: " + response.zip + "\n" + "Coordinates: " + "Lat (" + response.lat + ") | Lon (" + response.lon + ")" + "\n" + "TimeZone: " + response.timezone + "\n" + "Offset: " + response.offset + "\n" + "Currency: " + response.currency + "\n" + "ISP: " + response.isp + "\n" + "Org: " + response.org + "\n" + "As: " + response.as + "\n" + "Reverse: " + response.reverse + "\n" + "Mobile: " + response.mobile + "\n" + "Proxy: " + response.proxy + "\n" + "Hosting: " + response.hosting
 						inputtarget = $("input[name='ip']").val();
+						triggerInput(document.getElementById("info"))
 						document.getElementById("InfoDownload").style.display = 'inline';
                     }
                     //map start
