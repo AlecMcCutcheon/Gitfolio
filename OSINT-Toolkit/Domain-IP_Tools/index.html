@@ -18,6 +18,33 @@ header {
   top: 0;
 }
 
+#mainbutton {
+padding: 5px;
+  font-size: 18px;
+  min-width:150px;
+  max-width:150px;
+  border: 2px solid white;
+  border-radius: 50px;
+  background: rgba(33, 33, 33, 0);
+  width: 10vw;
+  color:white;
+}
+
+#mainbutton:hover {
+  transform: scale(1.06);
+  background: rgba(33, 33, 33, 0.7);
+  color: white;
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+#mainbutton:active {
+  transform: scale(0.6);
+  background: rgba(33, 33, 33, 0.7);
+  color: white;
+  border: 2px solid white;
+}
+
 header ul {
   list-style-type: none;
   margin: 0;
@@ -59,31 +86,6 @@ header li img {
 #main div {
   margin: 30px 0;
   font-size: 55px;
-}
-
-#main button {
-  font-family: Coyote, sans-serif;
-  font-size: 18px;
-  padding: 12px 2vw;
-  border: 2px solid #ff3259;
-  border-radius: 50px;
-  color: #fff;
-  background: #ff3259;
-  width: 10vw;
-  transition: 0.4s ease-in-out;
-}
-
-#main button:hover {
-  transform: scale(1.06);
-  background: #ff4366;
-  border: 2px solid #ff4366;
-  cursor: pointer;
-}
-
-#main button:active {
-  transform: scale(0.6);
-  background: #ff1640;
-  border: 2px solid #ff1640;
 }
 
 #main span {
@@ -491,23 +493,21 @@ box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
     </header>
 	</div>
 <body>
-	<div id="profile">
-	  <div id="profile_img""></div>
-      <div id="username"><a style="min-width:400px;">Default IP: Your Pubic IPv4</a style="min-width:400px;"><br><a style="min-width:400px;">Default Ports: Commonly Used</a><br><a>Default Settings View: Hidden</a></div>
-      <div id="userbio" style="display: none;">undefined</div>
+	<div id="profile" style="padding: 4vh 3vw;">
+      <div id="username" style="min-width:300px;"><span style="display:block; font-size: 26px;">Domain/IP Tools.</span><br><a style="font-size: 14px; text-decoration: none !important;">Default IP: Your Pubic IPv4</a><br><a style="font-size: 14px; text-decoration: none !important;">Default Ports: Commonly Used</a><br><a style="font-size: 14px; text-decoration: none !important;">Default Settings View: Hidden</a></div>
       <div id="about">
+				<span style="display:block;"><i class="fas fa-circle-notch"></i> &nbsp;&nbsp; Geo-Info Scan <input type="checkbox" id="Geobox" value="" checked> </span>
                 <span style="display:block;"><i class="fas fa-circle-notch"></i> &nbsp;&nbsp; Visual NS Map <input type="checkbox" id="Mapbox" value="" checked> </span>
-                <span style="display:block;"><i class="fas fa-circle-notch"></i> &nbsp;&nbsp; Port Scan <input type="checkbox" id="Portbox" value="" checked> </a></span>
+                <span style="display:block;"><i class="fas fa-circle-notch"></i> &nbsp;&nbsp; Port Scan <input type="checkbox" id="Portbox" value="" checked> </span>
                 <div class="socials">
-                <span style="display:block;"><a href="https://github.com/AlecMcCutcheon/Main/tree/main/OSINT-Toolkit/Domain-IP_Tools" target="_blank" class="socials"><i class="fab fa-github"></i></a> <input id='mainbutton' type="button" value="Run Selected" onclick="RunSelected()" /> </span>
+                <span style="display:block;"><button id='mainbutton' onclick="RunSelected()" />Run Selected</button></span>
                 </div>
                 </div>
 	</div>
 <div id="display">
     <div id="work">
-	    <h1>Domain/IP Tools.</h1>
+	    <h1 style="font-size: 26px;">Geo-Info, Visual NS Map & Port Scanner.</h1>
         <p>
-            <strong >- IP/Domain Geo Info, NS Map & Port Scanner (WIP)</strong>
         </p>
         <p></p>
         <h4> Domain or IP: <input id='ip' name="ip" type="text" value="Loading..." spellcheck="false"/> </h4>
