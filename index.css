@@ -580,6 +580,11 @@ body {
   background: rgb(20, 20, 20);
 }
 
+::selection {
+  color: var(--bg-color);
+  background: var(--text-color);
+}
+
 @media (max-width: 800px) {
   :root {
     --background-image: linear-gradient(
