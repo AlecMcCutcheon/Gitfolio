@@ -426,11 +426,6 @@ body {
   margin-top: 4vh;
 }
 
-::selection {
-  color: var(--bg-color);
-  background: var(--text-color);
-}
-
 @media (max-width: 800px) {
   #profile {
     width: 90vw;
