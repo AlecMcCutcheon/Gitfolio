@@ -426,6 +426,11 @@ body {
   margin-top: 4vh;
 }
 
+::selection {
+  color: var(--bg-color);
+  background: var(--text-color);
+}
+
 @media (max-width: 800px) {
   #profile {
     width: 90vw;
@@ -578,11 +583,6 @@ body {
 
 #blog_section section {
   background: rgb(20, 20, 20);
-}
-
-::selection {
-  color: var(--bg-color) !important;
-  background: var(--text-color) !important;
 }
 
 @media (max-width: 800px) {
