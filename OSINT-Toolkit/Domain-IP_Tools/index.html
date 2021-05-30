@@ -1,427 +1,712 @@
 <html>
 
 <head>
-	<title>Domain/IP Tools</title>
+    <title>Domain/IP Tools</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/magic-grid/dist/magic-grid.min.js" ></script>
-	<link rel="stylesheet" href="https://alecmccutcheon.github.io/Main/index.css">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
-<style id="stylish-2" class="stylish" type="text/css">
-/* Today */
-header {
-  width: 92vw;
-  padding: 4vh 0;
-  position: fixed;
-  top: 0;
-}
+    <script src="https://unpkg.com/magic-grid/dist/magic-grid.min.js"></script>
+    <link rel="stylesheet" href="https://alecmccutcheon.github.io/Main/index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-#mainbutton {
-padding: 5px;
-  font-size: 18px;
-  min-width:150px;
-  max-width:150px;
-  border: 2px solid white;
-  border-radius: 50px;
-  background: rgba(33, 33, 33, 0);
-  width: 10vw;
-  color:white;
-}
+    <style id="stylish-2" class="stylish" type="text/css">
+        /* Today */
+        header {
+            width: 92vw;
+            padding: 2vh 0;
+            position: absolute;
+            top: 0;
+        }
+		
+		header ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+        }
 
-#mainbutton:hover {
-  transform: scale(1.06);
-  background: rgba(33, 33, 33, 0.7);
-  color: white;
-  border: 2px solid white;
-  cursor: pointer;
-}
+        header li {
+            float: right;
+        }
 
-#mainbutton:active {
-  transform: scale(0.6);
-  background: rgba(33, 33, 33, 0.7);
-  color: white;
-  border: 2px solid white;
-}
+        header li a {
+            display: block;
+            color: #fff;
+            text-align: center;
+            padding: 10px 10px;
+            margin-left: 3vw;
+            text-decoration: none;
+            position: relative;
+        }
 
-header ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  font-size: 16px;
-}
+        header li img {
+            width: 30px;
+            height: auto;
+            padding: 10px 0;
+        }
+		
+		.dropdown-content {
+            display: none;
+            position: absolute;
+            text-align: center;
+            top: 3.5vh;
 
-header li {
-  float: right;
-}
 
-header li a {
-  display: block;
-  color: #fff;
-  text-align: center;
-  padding: 10px 10px;
-  margin-left: 3vw;
-  text-decoration: none;
-  position: relative;
-}
+        }
 
-header li img {
-  width: 30px;
-  height: auto;
-  padding: 10px 0;
-}
+        .dropdown-content a {
+			position: relative;
+            color: white;
+            text-decoration: none;
+            background-color: rgba(33, 33, 33, 0.5);
+            font-size: 15px;
+            display: block;
+            padding: 1px 15px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        }
 
-#main {
-  width: 92vw;
-  padding: 0 4vw;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  z-index: 2;
-  position: absolute;
-}
+        .dropdown-content a:hover,
+        .dropdown-content a:active {
+            background-color: #ddd; color:black;
+             !important
+        }
 
-#main div {
-  margin: 30px 0;
-  font-size: 55px;
-}
+        #dropdown:hover .dropdown-content,
+        #dropdown:active .dropdown-content {
+            display: block;
+             !important
+        }
 
-#main span {
-  font-size: 19px;
-  color: #c8c8c8;
-}
+        #mainbutton {
+            padding: 5px;
+            font-size: 18px;
+            min-width: 150px;
+            max-width: 150px;
+            border: 2px solid white;
+            border-radius: 50px;
+            background: rgba(33, 33, 33, 0);
+            width: 10vw;
+            color: white;
+        }
 
-.dropdown-content {
-  display: none;
-  position: absolute;
-  text-align: center;
-  top: 45px;
-  padding-right: 15px;
+        #mainbutton:hover {
+            transform: scale(1.06);
+            background: rgba(33, 33, 33, 0.7);
+            color: white;
+            border: 2px solid white;
+            cursor: pointer;
+        }
 
- 
-}
+        #mainbutton:active {
+            transform: scale(0.6);
+            background: rgba(33, 33, 33, 0.7);
+            color: white;
+            border: 2px solid white;
+        }
 
-.dropdown-content a {
-  color: white;
-  text-decoration: none;
-  right: 15px;
-  background-color: rgba(33, 33, 33, 0.5);
-  font-size: 19px;
-  display: block;
-  padding: 5px 16px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
+        #main {
+            width: 92vw;
+            padding: 0 4vw;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 2;
+            position: absolute;
+        }
 
-.dropdown-content a:hover, .dropdown-content a:active {background-color: #ddd; !important}
+        #main div {
+            margin: 30px 0;
+            font-size: 55px;
+        }
 
-#dropdown:hover .dropdown-content,  #dropdown:active .dropdown-content {display: block; !important}
-	
-  @media print {
-    .ms-editor-squiggler {
-        display:none !important;
-    }
-  }
-  .ms-editor-squiggler {
-    all: initial;
-    display: block !important;
-    height: 0px !important;
-  }
-  
-.bodyFill {
-    background-color: #dbdbdb !important;
-}
-.toolbar{
-    background-color: #CCCCCC !important;    
-}
+        #main span {
+            font-size: 19px;
+            color: #c8c8c8;
+        }
 
-#main-form-view-center, GE0S-T1CPDJ{
-    background-color: #CCCCCC !important;  
-}
-.podborder {
-    box-shadow: 0 2px 13px 0px rgba(0, 0, 0, 0.29);
-    background-color: #CCCCCC !important;    
-    border: 0px;
-}
-.myactivities .podborder td {
-    background: none !important;
-}
-.podborder, .myactivities{
-    background: none;
-    border: none;
-}
-.myactivities .podborder tr:nth-child(even) td{
-    padding-top: 6px;
-    padding-bottom: 6px;
-}
-.myactivities .podborder tr:nth-child(odd) td{
-    padding-top: 6px;
-    padding-bottom: 6px;
-}
-#divTodayActivities{
-    top: 440px !important;
-}
-#divMyActivities{
-    height: 167px !important; 
-}
-#divMyActivities2{
-    height: 140px !important;    
-}
-/* Service & Project Board */
-li.GCP5L4XBD2H {
-    background-color: #e6e6e6;
-}
-.GCP5L4XBO2H.GCP5L4XBD2H {
-    background-color: #212121 !important;
-    border-bottom: 1px solid #212121 !important;
-    border-top: 1px solid #026ccf !important;
-    border-left: 2px solid #026ccf !important;
-    border-right: 2px solid #026ccf !important;
-}
-.GCP5L4XBNRB:nth-child(odd) {
-    background-color:#e6e6e6 !important;
-}
-.GCP5L4XBNRB:nth-child(even) {
-    background-color:#e6e6e6 !important;
-}
-.GCP5L4XBMRB td{
-    background-color: #c9c9c9;
-    border-top: solid 1px #c0c0c0 !important;
-    border-bottom: solid 0px #212121 !important;
-}
+        @media print {
+            .ms-editor-squiggler {
+                display: none !important;
+            }
+        }
 
-.GCP5L4XBO2H span.GCP5L4XBD3H {
-    color: #ccc !important;
-}
-/* Service Board Column Header Fields */
-.GCP5L4XBLNH,.GCP5L4XBKQB {
-    border: 1px solid #c0c0c0;
-    background-color: #c9c9c9;
-}
-.GCP5L4XBBOH:first-child .GCP5L4XBLNH:hover, .GCP5L4XBLNH:hover, .GCP5L4XBJQB:first-child .GCP5L4XBDQB:hover, .GCP5L4XBJQB .GCP5L4XBDQB:hover {
-    background-color: #969696;
-}
+        .ms-editor-squiggler {
+            all: initial;
+            display: block !important;
+            height: 0px !important;
+        }
 
-/* Bar across the top area */
-.GCP5L4XBDMK{
-    filter: grayscale(25%);
-}
-.GCP5L4XBOAI {
-    border-bottom: none;
-    background-color: #dbdbdb;
-}
-.GCP5L4XBD2H {
-    margin-right: 1px !important;
-    border-top: 1px solid #2e2e2e;
-    border-left: 1px solid #2e2e2e;
-    border-right: 1px solid #2e2e2e;
-}
-.GCP5L4XBN2H {
-    border-bottom: 1px solid #2e2e2e;
-}
-.GCP5L4XBI3C, .GCP5L4XBIPH {
-    background-color: #ccc;
-}
-.GCP5L4XBM1H {
-    background-color: #dbdbdb;
-}
-.GCP5L4XBME {
-    background-color: #dbdbdb;
-}
-/* Top bar Ticket Search Field */
-.GCP5L4XBHAD .GCP5L4XBGAD{
-    height: 30px;
-    background-color: #dbdbdb;
-}
-/* alternating row colors */
-.GCP5L4XBPDF {
-    background-color: #ccc;
-}
+        .bodyFill {
+            background-color: #dbdbdb !important;
+        }
 
-/* top bar shadow */
-.GCP5L4XBD4C {
-    box-shadow: 0 0 15px #a1a1a1;
-}
+        .toolbar {
+            background-color: #CCCCCC !important;
+        }
 
-/* fix main button right padding */
-.GCP5L4XBO4C {
-    padding-right: 12px;
-}
+        #main-form-view-center,
+        GE0S-T1CPDJ {
+            background-color: #CCCCCC !important;
+        }
 
-/*  Member picker alignment */
-.cw_BaseBannerFilterViewImpl{
-    left: 13px !important;
-}
+        .podborder {
+            box-shadow: 0 2px 13px 0px rgba(0, 0, 0, 0.29);
+            background-color: #CCCCCC !important;
+            border: 0px;
+        }
 
-/* Left padding for list of projects? */
-.GCP5L4XBKCF {
-    padding-left: 4px;
-}
+        .myactivities .podborder td {
+            background: none !important;
+        }
 
-/* Ticket Body*/
-.GCP5L4XBOTG{
-    background-color: #dbdbdb;
-}
-.GCP5L4XBG0H.GCP5L4XBM-H, .GITBXYPDKI.GITBXYPDAI{
-    background-color: #2e2e2e !important;
-    border-bottom: 1px solid #2e2e2e !important;
-    border-top: 1px solid #026ccf !important;
-    border-left: 2px solid #026ccf !important;
-    border-right: 2px solid #026ccf !important;
-}
-li.GCP5L4XBM-H, li.GITBXYPDAI{
-    background-color: #e6e6e6;
-    margin-right: 1px !important;
-    border-top: 1px solid #2e2e2e;
-    border-left: 1px solid #2e2e2e;
-    border-right: 1px solid #2e2e2e;
-}
-.GCP5L4XBG0H span.GCP5L4XBL0H, .GITBXYPDKI span.GITBXYPDPI {
-    color: #ccc !important;
-}
-.GCP5L4XBAUG, .GCP5L4XBJYH, .GITBXYPDOSF{
- 	background-color: #dbdbdb;
-}
-.GCP5L4XBDSG{
- 	background-color: #dbdbdb;
-    border: 1px solid #c5c5c5;
-}
-.mm_textField, .GCP5L4XBPBH, .GCP5L4XBAVG{
-  	background-color: #c9c9c9;   
-}
-.GCP5L4XBCAH{
-    background-color: #dbdbdb !important;
-}
-.GCP5L4XBH3F .GCP5L4XBO2F{
-    background-color: #dbdbdb !important;
-}
-.GCP5L4XBPTH{
-    background-color: #dbdbdb;
-    border-color: #2e2e2e;
-}
-.GCP5L4XBMTH{
-    background-color: #dbdbdb;
-    border: 0px;
-}
-.GCP5L4XBNXH{
-    background-color: #f7f7f7 !important;    
-}
-.GCP5L4XBF0H {
-    border-bottom: 1px solid #2e2e2e;
-}
-.mm_discussionPanel:nth-child(odd) {
-    border: 1px solid #2e2e2e;
-}
-.mm_discussionPanel:nth-child(even) {
-    border: 1px solid #026ccf;
-}
-/* Configuration list item */
-.multilineGrayRow span, .multilineGrayRow div, .multilineGrayRow, .multilineGrayRow a, .multilineGrayRow a, .GCP5L4XBMDF td{
-    color: #4d4d4d !important;   
-}
-/*
+        .podborder,
+        .myactivities {
+            background: none;
+            border: none;
+        }
+
+        .myactivities .podborder tr:nth-child(even) td {
+            padding-top: 6px;
+            padding-bottom: 6px;
+        }
+
+        .myactivities .podborder tr:nth-child(odd) td {
+            padding-top: 6px;
+            padding-bottom: 6px;
+        }
+
+        #divTodayActivities {
+            top: 440px !important;
+        }
+
+        #divMyActivities {
+            height: 167px !important;
+        }
+
+        #divMyActivities2 {
+            height: 140px !important;
+        }
+
+        /* Service & Project Board */
+        li.GCP5L4XBD2H {
+            background-color: #e6e6e6;
+        }
+
+        .GCP5L4XBO2H.GCP5L4XBD2H {
+            background-color: #212121 !important;
+            border-bottom: 1px solid #212121 !important;
+            border-top: 1px solid #026ccf !important;
+            border-left: 2px solid #026ccf !important;
+            border-right: 2px solid #026ccf !important;
+        }
+
+        .GCP5L4XBNRB:nth-child(odd) {
+            background-color: #e6e6e6 !important;
+        }
+
+        .GCP5L4XBNRB:nth-child(even) {
+            background-color: #e6e6e6 !important;
+        }
+
+        .GCP5L4XBMRB td {
+            background-color: #c9c9c9;
+            border-top: solid 1px #c0c0c0 !important;
+            border-bottom: solid 0px #212121 !important;
+        }
+
+        .GCP5L4XBO2H span.GCP5L4XBD3H {
+            color: #ccc !important;
+        }
+
+        /* Service Board Column Header Fields */
+        .GCP5L4XBLNH,
+        .GCP5L4XBKQB {
+            border: 1px solid #c0c0c0;
+            background-color: #c9c9c9;
+        }
+
+        .GCP5L4XBBOH:first-child .GCP5L4XBLNH:hover,
+        .GCP5L4XBLNH:hover,
+        .GCP5L4XBJQB:first-child .GCP5L4XBDQB:hover,
+        .GCP5L4XBJQB .GCP5L4XBDQB:hover {
+            background-color: #969696;
+        }
+
+        /* Bar across the top area */
+        .GCP5L4XBDMK {
+            filter: grayscale(25%);
+        }
+
+        .GCP5L4XBOAI {
+            border-bottom: none;
+            background-color: #dbdbdb;
+        }
+
+        .GCP5L4XBD2H {
+            margin-right: 1px !important;
+            border-top: 1px solid #2e2e2e;
+            border-left: 1px solid #2e2e2e;
+            border-right: 1px solid #2e2e2e;
+        }
+
+        .GCP5L4XBN2H {
+            border-bottom: 1px solid #2e2e2e;
+        }
+
+        .GCP5L4XBI3C,
+        .GCP5L4XBIPH {
+            background-color: #ccc;
+        }
+
+        .GCP5L4XBM1H {
+            background-color: #dbdbdb;
+        }
+
+        .GCP5L4XBME {
+            background-color: #dbdbdb;
+        }
+
+        /* Top bar Ticket Search Field */
+        .GCP5L4XBHAD .GCP5L4XBGAD {
+            height: 30px;
+            background-color: #dbdbdb;
+        }
+
+        /* alternating row colors */
+        .GCP5L4XBPDF {
+            background-color: #ccc;
+        }
+
+        /* top bar shadow */
+        .GCP5L4XBD4C {
+            box-shadow: 0 0 15px #a1a1a1;
+        }
+
+        /* fix main button right padding */
+        .GCP5L4XBO4C {
+            padding-right: 12px;
+        }
+
+        /*  Member picker alignment */
+        .cw_BaseBannerFilterViewImpl {
+            left: 13px !important;
+        }
+
+        /* Left padding for list of projects? */
+        .GCP5L4XBKCF {
+            padding-left: 4px;
+        }
+
+        /* Ticket Body*/
+        .GCP5L4XBOTG {
+            background-color: #dbdbdb;
+        }
+
+        .GCP5L4XBG0H.GCP5L4XBM-H,
+        .GITBXYPDKI.GITBXYPDAI {
+            background-color: #2e2e2e !important;
+            border-bottom: 1px solid #2e2e2e !important;
+            border-top: 1px solid #026ccf !important;
+            border-left: 2px solid #026ccf !important;
+            border-right: 2px solid #026ccf !important;
+        }
+
+        li.GCP5L4XBM-H,
+        li.GITBXYPDAI {
+            background-color: #e6e6e6;
+            margin-right: 1px !important;
+            border-top: 1px solid #2e2e2e;
+            border-left: 1px solid #2e2e2e;
+            border-right: 1px solid #2e2e2e;
+        }
+
+        .GCP5L4XBG0H span.GCP5L4XBL0H,
+        .GITBXYPDKI span.GITBXYPDPI {
+            color: #ccc !important;
+        }
+
+        .GCP5L4XBAUG,
+        .GCP5L4XBJYH,
+        .GITBXYPDOSF {
+            background-color: #dbdbdb;
+        }
+
+        .GCP5L4XBDSG {
+            background-color: #dbdbdb;
+            border: 1px solid #c5c5c5;
+        }
+
+        .mm_textField,
+        .GCP5L4XBPBH,
+        .GCP5L4XBAVG {
+            background-color: #c9c9c9;
+        }
+
+        .GCP5L4XBCAH {
+            background-color: #dbdbdb !important;
+        }
+
+        .GCP5L4XBH3F .GCP5L4XBO2F {
+            background-color: #dbdbdb !important;
+        }
+
+        .GCP5L4XBPTH {
+            background-color: #dbdbdb;
+            border-color: #2e2e2e;
+        }
+
+        .GCP5L4XBMTH {
+            background-color: #dbdbdb;
+            border: 0px;
+        }
+
+        .GCP5L4XBNXH {
+            background-color: #f7f7f7 !important;
+        }
+
+        .GCP5L4XBF0H {
+            border-bottom: 1px solid #2e2e2e;
+        }
+
+        .mm_discussionPanel:nth-child(odd) {
+            border: 1px solid #2e2e2e;
+        }
+
+        .mm_discussionPanel:nth-child(even) {
+            border: 1px solid #026ccf;
+        }
+
+        /* Configuration list item */
+        .multilineGrayRow span,
+        .multilineGrayRow div,
+        .multilineGrayRow,
+        .multilineGrayRow a,
+        .multilineGrayRow a,
+        .GCP5L4XBMDF td {
+            color: #4d4d4d !important;
+        }
+
+        /*
 Highlighted ticket text
 .GCP5L4XBMDF td div{
     color: #212121 !important;     
 }
 */
-.GCP5L4XBOTH, .GCP5L4XBNTH{
-    border: 1px solid #dbdbdb;
-}
-/* Time entry window pop-up */
-/* Top bar */
-.GITBXYPDD1F{
-    background-color: #ccc;   
-}
-.GITBXYPDCOF, .GITBXYPDBOF, .GITBXYPDDOF{
-    background-color: #dbdbdb !important;
-    border: 1px solid #dbdbdb;
-}
-.GITBXYPDEOF{
-    border-color: #2e2e2e;
-}
-.GITBXYPDFOE, .GITBXYPDKKE, .GITBXYPDHIF{
- 	background-color: #dbdbdb;    
-}
-.GITBXYPDIME{
- 	background-color: #dbdbdb;
-    border: 1px solid #c5c5c5;
-}
-.GITBXYPDAJ{
-    background-color: transparent !important;
-}
-.mm_comboBox, .mm_textField{
-    background-color: #dbdbdb !important;    
-}
-.GITBXYPDLFF, .GCP5L4XBEVH{
-    background-color: #f7f7f7;
-}
-.GITBXYPDMLE{
-box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
-}
-.GITBXYPDGIF:first-child .GITBXYPDAIF:hover{
-    background-color: #e6e6e6;
-}
+        .GCP5L4XBOTH,
+        .GCP5L4XBNTH {
+            border: 1px solid #dbdbdb;
+        }
 
-/* Tab Configuration pop-up */
-.GCP5L4XBOVG, .GCP5L4XBJVG, .GCP5L4XBMVG, .GCP5L4XBAWG, .GCP5L4XBFWG, .GCP5L4XBDWG, .GCP5L4XBEWG, .GCP5L4XBGVG, .GCP5L4XBLVG{
-    background-color: #c9c9c9;
-}
-.GCP5L4XBPVG{
-    background-color: #c9c9c9;
-    box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.28);
-    border: 1px #2e2e2e solid;
-}
-.GCP5L4XBHWG{
-    border: 1px #c9c9c9 solid;
-}
-.GCP5L4XBGWG, .GCP5L4XBNVG{
-    padding-right: 0px; 
-}
-.GCP5L4XBBVH{
-    background: #f7f7f7;
-}
-.GCP5L4XBDVH, .GCP5L4XBCVH{
-    background: #026ccf !important;
-}
-/* New Ticket */
-.GCP5L4XBCMH{
-    background-color: #f7f7f7;
-}
-.GCP5L4XBPUG {
-    background-color: #dbdbdb;
-}
-/* New Item Widget */
-.GCP5L4XBIXG, .GCP5L4XBDYG, .GCP5L4XBGXG, .GCP5L4XBFXG, .GCP5L4XBOXG, .GCP5L4XBOSI, .GCP5L4XBFYG, .GCP5L4XBEYG, .GCP5L4XBHXG, .GCP5L4XBPWG, .cw_PsaFlyoutRootContainer, .cw_milesTextBox, .cw_startTextBox{
-    background-color: #c9c9c9 !important;
-}
-.GCP5L4XBGYG{
-    border: 0px;   
-}
-.GCP5L4XBBYG{
-    padding-right: 0px   
-}
-.GCP5L4XBJ0G{
-    border: 1px solid #969696;
-    margin-right: 12px !important;
-}
-.GCP5L4XBBYG {
-    overflow: hidden;
-}
-.GCP5L4XBNXG:after, .GCP5L4XBMXG:after{
-    border-color: transparent transparent #c9c9c9 #c9c9c9;   
-}
+        /* Time entry window pop-up */
+        /* Top bar */
+        .GITBXYPDD1F {
+            background-color: #ccc;
+        }
 
-.GCP5L4XBJXG {
-    box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.28);
-    border: 1px #2e2e2e solid;
-    right: 13px;
-}
-</style>
-	
+        .GITBXYPDCOF,
+        .GITBXYPDBOF,
+        .GITBXYPDDOF {
+            background-color: #dbdbdb !important;
+            border: 1px solid #dbdbdb;
+        }
+
+        .GITBXYPDEOF {
+            border-color: #2e2e2e;
+        }
+
+        .GITBXYPDFOE,
+        .GITBXYPDKKE,
+        .GITBXYPDHIF {
+            background-color: #dbdbdb;
+        }
+
+        .GITBXYPDIME {
+            background-color: #dbdbdb;
+            border: 1px solid #c5c5c5;
+        }
+
+        .GITBXYPDAJ {
+            background-color: transparent !important;
+        }
+
+        .mm_comboBox,
+        .mm_textField {
+            background-color: #dbdbdb !important;
+        }
+
+        .GITBXYPDLFF,
+        .GCP5L4XBEVH {
+            background-color: #f7f7f7;
+        }
+
+        .GITBXYPDMLE {
+            box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
+        }
+
+        .GITBXYPDGIF:first-child .GITBXYPDAIF:hover {
+            background-color: #e6e6e6;
+        }
+
+        /* Tab Configuration pop-up */
+        .GCP5L4XBOVG,
+        .GCP5L4XBJVG,
+        .GCP5L4XBMVG,
+        .GCP5L4XBAWG,
+        .GCP5L4XBFWG,
+        .GCP5L4XBDWG,
+        .GCP5L4XBEWG,
+        .GCP5L4XBGVG,
+        .GCP5L4XBLVG {
+            background-color: #c9c9c9;
+        }
+
+        .GCP5L4XBPVG {
+            background-color: #c9c9c9;
+            box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.28);
+            border: 1px #2e2e2e solid;
+        }
+
+        .GCP5L4XBHWG {
+            border: 1px #c9c9c9 solid;
+        }
+
+        .GCP5L4XBGWG,
+        .GCP5L4XBNVG {
+            padding-right: 0px;
+        }
+
+        .GCP5L4XBBVH {
+            background: #f7f7f7;
+        }
+
+        .GCP5L4XBDVH,
+        .GCP5L4XBCVH {
+            background: #026ccf !important;
+        }
+
+        /* New Ticket */
+        .GCP5L4XBCMH {
+            background-color: #f7f7f7;
+        }
+
+        .GCP5L4XBPUG {
+            background-color: #dbdbdb;
+        }
+
+        /* New Item Widget */
+        .GCP5L4XBIXG,
+        .GCP5L4XBDYG,
+        .GCP5L4XBGXG,
+        .GCP5L4XBFXG,
+        .GCP5L4XBOXG,
+        .GCP5L4XBOSI,
+        .GCP5L4XBFYG,
+        .GCP5L4XBEYG,
+        .GCP5L4XBHXG,
+        .GCP5L4XBPWG,
+        .cw_PsaFlyoutRootContainer,
+        .cw_milesTextBox,
+        .cw_startTextBox {
+            background-color: #c9c9c9 !important;
+        }
+
+        .GCP5L4XBGYG {
+            border: 0px;
+        }
+
+        .GCP5L4XBBYG {
+            padding-right: 0px
+        }
+
+        .GCP5L4XBJ0G {
+            border: 1px solid #969696;
+            margin-right: 12px !important;
+        }
+
+        .GCP5L4XBBYG {
+            overflow: hidden;
+        }
+
+        .GCP5L4XBNXG:after,
+        .GCP5L4XBMXG:after {
+            border-color: transparent transparent #c9c9c9 #c9c9c9;
+        }
+
+        .GCP5L4XBJXG {
+            box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.28);
+            border: 1px #2e2e2e solid;
+            right: 13px;
+        }
+    </style>
+
+</head>
+
+<div id="main">
+    <header>
+        <ul>
+            <li style="float:left;">
+                <img src="https://img.icons8.com/ios-filled/344/ffffff/my-computer--v1.png">
+            </li>
+            <li><a class="swipe" href="mailto:alecraymccutcheon@gmail.com" tabindex="4">Contact</a></li>
+            <li id='dropdown'><a class="swipe" tabindex="3">OSINT Toolkit</a>
+                <div class="dropdown-content">
+                    <a href="https://alecmccutcheon.github.io/Main/OSINT-Toolkit/Domain-IP_Tools/">Domain/IP Tools</a>
+                </div>
+            </li>
+            <li><a class="swipe" href="https://alecmccutcheon.github.io/Main/" tabindex="4">Main</a></li>
+        </ul>
+    </header>
+</div>
+
+<body>
+    <div id="profile" style="min-width:220px;">
+        <div id="username"><span style="display:block; font-size: 26px;">Domain/IP Tools.</span><br><a style="font-size: 14px; text-decoration: none !important;">Default IP: Your Pubic IPv4</a><br><a style="font-size: 14px; text-decoration: none !important;">Default Ports: Commonly Used</a><br><a style="font-size: 14px; text-decoration: none !important;">Default Settings View: Hidden</a></div>
+        <div id="about">
+            <span style="display:block;"><i class="fas fa-circle-notch"></i> &nbsp;&nbsp; Geo-Info Scan <input type="checkbox" id="Geobox" value="" checked> </span>
+            <span style="display:block;"><i class="fas fa-circle-notch"></i> &nbsp;&nbsp; Visual NS Map <input type="checkbox" id="Mapbox" value=""> </span>
+            <span style="display:block;"><i class="fas fa-circle-notch"></i> &nbsp;&nbsp; Port Scan <input type="checkbox" id="Portbox" value="" checked> </span>
+            <div class="socials">
+                <span style="display:block; " onclick="RunSelected()"><button id='mainbutton' />Run Selected</button></span>
+            </div>
+        </div>
+    </div>
+    <div id="display">
+        <div id="work">
+            <h1 style="font-size: 26px;">Geo-Info, Visual NS Map & Port Scanner.</h1>
+            <p>
+            </p>
+            <p></p>
+            <h4> Domain or IP: <input id='ip' name="ip" type="text" value="Loading..." spellcheck="false" /> </h4>
+            <button onclick="Settingsbutton()">Show/Hide Settings.</button>
+            <div id='Settings' style="display:none">
+                <button onclick="Notesbutton()">Show/Hide Notes.</button>
+                <table>
+                    <p></p>
+                    <b style="display:block">Custom Ports:</b>
+                    <p></p>
+                    <input name="port" type="text" value="" spellcheck="false" />
+                    <p></p>
+                </table>
+                <table>
+                    <b">Range Of Ports:</b>
+                        <p></p>
+                        <tr>
+                            </td>
+                            <td align="left">
+                                <input type="text" id="port_start" size="4" maxlength="6" spellcheck="false"> - Starting port<br><br><input type="text" id="port_end" size="4" maxlength="6" spellcheck="false"> - Ending port
+                            </td>
+                        </tr>
+                </table>
+                <p></p>
+                <form id='portscan'>
+                    <b>Common Ports:</b>
+                    <p></p>
+                    <table id='portcheckboxs'>
+                        <tbody>
+                            <tr>
+                                <td align="left" nowrap="">
+                                    <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" id='test' name="port_array[]" value="21"> FTP/file server open/vulnerable (port 21)</font>
+                                </td>
+                                <td align="left" nowrap="">
+                                    <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="23"> TELNET service open/vulnerable(port 23)</font>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" nowrap="">
+                                    <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="25"> SMTP relay vulnerable (port 25)</font>
+                                </td>
+                                <td align="left" nowrap="">
+                                    <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="110"> POP3/mail server vulnerable (port 110)</font>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" nowrap="">
+                                    <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="194"> IRC relay vulnerable (port 194)</font>
+                                </td>
+                                <td align="left" nowrap="">
+                                    <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="143"> IMAP/mail server vulnerable (port 143)</font>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" nowrap="">
+                                    <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="80"> HTTP/web server vulnerable (port 80)</font>
+                                </td>
+                                <td align="left" nowrap="">
+                                    <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="445"> Scan for Windows file sharing susceptibility (port 445)</font>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" nowrap="">
+                                    <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="139"> Scan for NETBIOS susceptibility (port 139)</font>
+                                </td>
+                                <td align="left" nowrap="">
+                                    <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="8080"> Scan for firewall remote login (port 8080)</font>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" nowrap="">
+                                    <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="3389"> Microsoft Remote Desktop vulnerable (port 3389)</font>
+                                </td>
+                                <td align="left" nowrap="">
+                                    <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="5900"> VNC Remote Desktop vulnerable (port 5900)</font>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" nowrap="">
+                                    <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="1723"> VPN (PPTP) service open/vulnerable (port 1723)</font>
+                                </td>
+                                <td align="left" nowrap="">
+                                    <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="1433"> Microsoft SQL Server open/vulnerable (port 1433)</font>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" nowrap="">
+                                    <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="1521"> Oracle database service open/vulnerable (port 1521) .</font>
+                                </td>
+                                <td align="left" nowrap="">
+                                    <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="3306"> MySQL database open/vulnerable (port 3306)</font>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="center">
+                                    <font size="-1" face="Arial"><input type="button" value="Check/Uncheck All" onclick="Checkbutton()" /></font>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+                <p> </p>
+            </div>
+            <ul>
+                <div class="projects" id="work_section" style="position: relative;">
+                    <a>
+                        <section>
+                            <textarea spellcheck="false" id="result" class='autoExpand' style="width: calc(100%); resize: none; display: flex; "></textarea>
+                            <input type="button" id='ScanDownload' value="Download Report" onclick="doDownload(document.getElementById('result').value, 'Port Scan Repot (' + inputtarget + ').log')" style="display:none;" />
+                        </section>
+                    </a>
+                    <a>
+                        <section>
+                            <textarea spellcheck="false" id="info" class='autoExpand' style="width: calc(100%); resize: none; display: flex; "></textarea>
+                            <br>
+                            <input type="button" id='InfoDownload' value="Download Geo-Info" onclick="doDownload(document.getElementById('info').value, 'Geo-Info (' + inputtarget + ').log')" style="display:none;" />
+                        </section>
+                    </a>
+                </div>
+                <br>
+            </ul>
+            <a id='maplink' href="" target="_blank">
+                <img id='map' src='' style="max-width:1000px;display:none;">
+            </a>
+            <div id='Notes' style="display:none">
+                <p>Then you run a "Port scan" or a "full scan" it will freeze the tab while it fetchs the Port data so the smaller the scan the better.</p>
+                <p>You can click the Map to view it in it's Full Size</p>
+            </div>
+        </div>
+    </div>
     <script>
         function Settingsbutton() {
             var x = document.getElementById("Settings");
@@ -474,179 +759,13 @@ box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
                 }
             }
         }
-    </script>
-	
-</head>
 
-<div id="main">
-    <header>
-      <ul>
-        <li style="float:left;">
-          <img src="https://img.icons8.com/ios-filled/344/ffffff/my-computer--v1.png">
-        </li>
-        <li><a class="swipe" href="mailto:alecraymccutcheon@gmail.com" tabindex="4">Contact</a></li>
-		<li id='dropdown'><a class="swipe" tabindex="3">OSINT Toolkit</a>
-			<div class="dropdown-content">
-			<a href="https://alecmccutcheon.github.io/Main/OSINT-Toolkit/Domain-IP_Tools/">Domain/IP Tools</a>
-			</div>
-		</li>
-		<li><a class="swipe" href="https://alecmccutcheon.github.io/Main/" tabindex="4">Main</a></li>
-      </ul>
-    </header>
-	</div>
-<body>
-	<div id="profile" style="padding: 4vh 3vw;">
-      <div id="username" style="min-width:300px;"><span style="display:block; font-size: 26px;">Domain/IP Tools.</span><br><a style="font-size: 14px; text-decoration: none !important;">Default IP: Your Pubic IPv4</a><br><a style="font-size: 14px; text-decoration: none !important;">Default Ports: Commonly Used</a><br><a style="font-size: 14px; text-decoration: none !important;">Default Settings View: Hidden</a></div>
-      <div id="about">
-				<span style="display:block;"><i class="fas fa-circle-notch"></i> &nbsp;&nbsp; Geo-Info Scan <input type="checkbox" id="Geobox" value="" checked> </span>
-                <span style="display:block;"><i class="fas fa-circle-notch"></i> &nbsp;&nbsp; Visual NS Map <input type="checkbox" id="Mapbox" value=""> </span>
-                <span style="display:block;"><i class="fas fa-circle-notch"></i> &nbsp;&nbsp; Port Scan <input type="checkbox" id="Portbox" value="" checked> </span>
-                <div class="socials">
-                <span style="display:block; " onclick="RunSelected()"><button id='mainbutton'/>Run Selected</button></span>
-                </div>
-                </div>
-	</div>
-<div id="display">
-    <div id="work">
-	    <h1 style="font-size: 26px;">Geo-Info, Visual NS Map & Port Scanner.</h1>
-        <p>
-        </p>
-        <p></p>
-        <h4> Domain or IP: <input id='ip' name="ip" type="text" value="Loading..." spellcheck="false"/> </h4>
-        <button onclick="Settingsbutton()">Show/Hide Settings.</button>
-        <div id='Settings' style="display:none">
-            <button onclick="Notesbutton()">Show/Hide Notes.</button>
-            <table>
-                <p></p>
-                <b style="display:block">Custom Ports:</b>
-                <p></p>
-                <input name="port" type="text" value="" spellcheck="false"/>
-                <p></p>
-            </table>
-            <table>
-                <b">Range Of Ports:</b>
-                <p></p>
-                <tr>
-                    </td>
-                    <td align="left">
-                        <input type="text" id="port_start" size="4" maxlength="6" spellcheck="false"> - Starting port<br><br><input type="text" id="port_end" size="4" maxlength="6" spellcheck="false"> - Ending port
-                    </td>
-                </tr>
-            </table>
-            <p></p>
-            <form id='portscan'>
-                <b>Common Ports:</b>
-                <p></p>
-                <table id='portcheckboxs'>
-                    <tbody>
-                        <tr>
-                            <td align="left" nowrap="">
-                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" id='test' name="port_array[]" value="21"> FTP/file server open/vulnerable (port 21)</font>
-                            </td>
-                            <td align="left" nowrap="">
-                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="23"> TELNET service open/vulnerable(port 23)</font>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="left" nowrap="">
-                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="25"> SMTP relay vulnerable (port 25)</font>
-                            </td>
-                            <td align="left" nowrap="">
-                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="110"> POP3/mail server vulnerable (port 110)</font>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="left" nowrap="">
-                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="194"> IRC relay vulnerable (port 194)</font>
-                            </td>
-                            <td align="left" nowrap="">
-                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="143"> IMAP/mail server vulnerable (port 143)</font>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="left" nowrap="">
-                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="80"> HTTP/web server vulnerable (port 80)</font>
-                            </td>
-                            <td align="left" nowrap="">
-                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="445"> Scan for Windows file sharing susceptibility (port 445)</font>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="left" nowrap="">
-                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="139"> Scan for NETBIOS susceptibility (port 139)</font>
-                            </td>
-                            <td align="left" nowrap="">
-                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="8080"> Scan for firewall remote login (port 8080)</font>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="left" nowrap="">
-                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="3389"> Microsoft Remote Desktop vulnerable (port 3389)</font>
-                            </td>
-                            <td align="left" nowrap="">
-                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="5900"> VNC Remote Desktop vulnerable (port 5900)</font>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="left" nowrap="">
-                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="1723"> VPN (PPTP) service open/vulnerable (port 1723)</font>
-                            </td>
-                            <td align="left" nowrap="">
-                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="1433"> Microsoft SQL Server open/vulnerable (port 1433)</font>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="left" nowrap="">
-                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="1521"> Oracle database service open/vulnerable (port 1521) .</font>
-                            </td>
-                            <td align="left" nowrap="">
-                                <font size="-1" face="Arial" data-children-count="1"><input type="checkbox" name="port_array[]" value="3306"> MySQL database open/vulnerable (port 3306)</font>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" align="center">
-                                <font size="-1" face="Arial"><input type="button" value="Check/Uncheck All" onclick="Checkbutton()" /></font>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </form>
-            <p> </p>
-        </div>
-        <ul>
-		 <div class="projects" id="work_section" style="position: relative;">
-			<a>
-			<section>
-			<textarea spellcheck="false" id="result" class='autoExpand' style="width: calc(100%); resize: none; display: flex; " autofocus></textarea>
-			<input type="button" id='ScanDownload' value="Download Report" onclick="doDownload(document.getElementById('result').value, 'Port Scan Repot (' + inputtarget + ').log')" style="display:none;" />
-			</section>
-			</a>
-			<a>
-			<section>
-			<textarea spellcheck="false" id="info" class='autoExpand' style="width: calc(100%); resize: none; display: flex; " autofocus></textarea>
-			<br>
-			<input type="button" id='InfoDownload' value="Download Geo-Info" onclick="doDownload(document.getElementById('info').value, 'Geo-Info (' + inputtarget + ').log')" style="display:none;" />
-			</section>
-			</a> 
-			</div>
-			<br>
-		</ul>
-    <a id='maplink' href="" target="_blank">
-        <img id='map' src='' style="max-width:1000px;display:none;">
-    </a>
-    <div id='Notes' style="display:none">
-        <p>Then you run a "Port scan" or a "full scan" it will freeze the tab while it fetchs the Port data so the smaller the scan the better.</p>
-        <p>You can click the Map to view it in it's Full Size</p>
-    </div>
-</div>
-	 </div>
-    <script>
         function Load() {
 
             commanportschecked = false;
-			LoadBalancerMem_1 = 1;
-			LoadBalancerMem_2 = 1;
-			inputtarget = $("input[name='ip']").val();
+            LoadBalancerMem_1 = 1;
+            LoadBalancerMem_2 = 1;
+            inputtarget = $("input[name='ip']").val();
             Checkbutton()
 
             $.ajax({
@@ -657,7 +776,7 @@ box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
                     document.getElementById("ip").value = data
                 }
             });
-			
+
             $.ajax({
                 type: "GET",
                 url: "https://cors-anywhere-proxy.mccutcheon.workers.dev/?https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv",
@@ -668,92 +787,95 @@ box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.28);
             });
 
         }
-		
-				
-		Load();
-		
-function getScrollHeight(elm){
-  var savedValue = elm.value
-  elm.value = ''
-  elm._baseScrollHeight = elm.scrollHeight
-  elm.value = savedValue
-}
-
-function onExpandableTextareaInput({ target:elm }){
-  // make sure the input event originated from a textarea and it's desired to be auto-expandable
-  if( !elm.classList.contains('autoExpand') || !elm.nodeName == 'TEXTAREA' ) return
-  
-  var minRows = elm.getAttribute('data-min-rows')|0, rows;
-  !elm._baseScrollHeight && getScrollHeight(elm)
-
-  elm.rows = minRows
-  rows = Math.ceil((elm.scrollHeight - elm._baseScrollHeight) / 16)
-  elm.rows = minRows + rows
-}
-
-// global delegated event listener
-document.addEventListener('input', onExpandableTextareaInput)
 
 
-function triggerInput(element) {
-    var event = new Event('input', {
-        'bubbles': true,
-        'cancelable': true
-    });
+        Load();
 
-    element.dispatchEvent(event);
-}
-		
-		function Proxy_Load_Balancer() {
-		
-		/* 
-		If you have cloned this project Please create your own proxy servers(CloudFlare Workers) to use in this loop:
-		My proxy Servers will only work at my domain anyway, But for Testing Only they will also work in a local html file off a computer.
-		*/
-		
-			if (LoadBalancerMem_1 == 1) {
-			
-				LoadBalancerMem_1 = 2;
-				Proxy = 'https://cors-anywhere-proxy.mccutcheon.workers.dev/' // Proxy Server 1
-				return
-			}
-			
-			if (LoadBalancerMem_1 == 2) {
-			
-				LoadBalancerMem_1 = 3;
-				Proxy = 'https://cors-anywhere-proxy.mccutcheon2.workers.dev/' // Proxy Server 2
-				return
-			}
-			
-			if (LoadBalancerMem_1 == 3) {
-			
-				LoadBalancerMem_1 = 4;
-				Proxy = 'https://cors-anywhere-proxy2.mccutcheon.workers.dev/' // Proxy Server 3
-				return
-			}
-			
-			if (LoadBalancerMem_1 == 4) {
-			
-				LoadBalancerMem_1 = 5;
-				Proxy = 'https://cors-anywhere-proxy2.mccutcheon2.workers.dev/' // Proxy Server 4
-				return
-			}
-			
-			if (LoadBalancerMem_1 == 5) {
-			
-				LoadBalancerMem_1 = 6;
-				Proxy = 'https://cors-anywhere-proxy3.mccutcheon.workers.dev/' // Proxy Server 5
-				return
-			}
-			
-			if (LoadBalancerMem_1 == 6) {
-			
-				LoadBalancerMem_1 = 1;
-				Proxy = 'https://cors-anywhere-proxy3.mccutcheon2.workers.dev/' // Proxy Server 6
-				return
-			}
-		
-		}
+        function getScrollHeight(elm) {
+            var savedValue = elm.value
+            elm.value = ''
+            elm._baseScrollHeight = elm.scrollHeight
+            elm.value = savedValue
+        }
+
+        function onExpandableTextareaInput({
+            target: elm
+        }) {
+            // make sure the input event originated from a textarea and it's desired to be auto-expandable
+            if (!elm.classList.contains('autoExpand') || !elm.nodeName == 'TEXTAREA') return
+
+            var minRows = elm.getAttribute('data-min-rows') | 0,
+                rows;
+            !elm._baseScrollHeight && getScrollHeight(elm)
+
+            elm.rows = minRows
+            rows = Math.ceil((elm.scrollHeight - elm._baseScrollHeight) / 16)
+            elm.rows = minRows + rows
+        }
+
+        // global delegated event listener
+        document.addEventListener('input', onExpandableTextareaInput)
+
+
+        function triggerInput(element) {
+            var event = new Event('input', {
+                'bubbles': true,
+                'cancelable': true
+            });
+
+            element.dispatchEvent(event);
+        }
+
+        function Proxy_Load_Balancer() {
+
+            /* 
+            If you have cloned this project Please create your own proxy servers(CloudFlare Workers) to use in this loop:
+            My proxy Servers will only work at my domain anyway, But for Testing Only they will also work in a local html file off a computer.
+            */
+
+            if (LoadBalancerMem_1 == 1) {
+
+                LoadBalancerMem_1 = 2;
+                Proxy = 'https://cors-anywhere-proxy.mccutcheon.workers.dev/' // Proxy Server 1
+                return
+            }
+
+            if (LoadBalancerMem_1 == 2) {
+
+                LoadBalancerMem_1 = 3;
+                Proxy = 'https://cors-anywhere-proxy.mccutcheon2.workers.dev/' // Proxy Server 2
+                return
+            }
+
+            if (LoadBalancerMem_1 == 3) {
+
+                LoadBalancerMem_1 = 4;
+                Proxy = 'https://cors-anywhere-proxy2.mccutcheon.workers.dev/' // Proxy Server 3
+                return
+            }
+
+            if (LoadBalancerMem_1 == 4) {
+
+                LoadBalancerMem_1 = 5;
+                Proxy = 'https://cors-anywhere-proxy2.mccutcheon2.workers.dev/' // Proxy Server 4
+                return
+            }
+
+            if (LoadBalancerMem_1 == 5) {
+
+                LoadBalancerMem_1 = 6;
+                Proxy = 'https://cors-anywhere-proxy3.mccutcheon.workers.dev/' // Proxy Server 5
+                return
+            }
+
+            if (LoadBalancerMem_1 == 6) {
+
+                LoadBalancerMem_1 = 1;
+                Proxy = 'https://cors-anywhere-proxy3.mccutcheon2.workers.dev/' // Proxy Server 6
+                return
+            }
+
+        }
 
         function sleep(milliseconds) {
             let timeStart = new Date().getTime();
@@ -778,10 +900,10 @@ function triggerInput(element) {
 
         */
 
-		function doDownload(str, name) {
-              function dataUrl(data) {
+        function doDownload(str, name) {
+            function dataUrl(data) {
                 return "data:x-application/xml;charset=utf-8," + escape(data);
-              }
+            }
             var downloadLink = document.createElement("a");
             downloadLink.href = dataUrl(str);
             downloadLink.download = name;
@@ -789,59 +911,59 @@ function triggerInput(element) {
             downloadLink.click();
             document.body.removeChild(downloadLink);
         }
-			
+
         function PortScan(target, port) {
-			
-			Proxy_Load_Balancer();
-			
-			//if (LoadBalancerMem_2 == 1) {
-			 //LoadBalancerMem_2 = 2
-			 secs = ((Port_Count) * 800) / 1000
-			 sleep(800)
-			fetch(Proxy + "?https://www.ipfingerprints.com/scripts/getPortsInfo.php", {
-  "headers": {
-    "accept": "application/json, text/javascript, */*; q=0.01",
-    "accept-language": "en-US,en;q=0.9",
-    "content-type": "application/x-www-form-urlencoded",
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "same-origin",
-    "sec-gpc": "1",
-    "x-requested-with": "XMLHttpRequest"
-  },
-  "referrer": "https://www.ipfingerprints.com/portscan.php",
-  "referrerPolicy": "strict-origin-when-cross-origin",
-  "body": "remoteHost=" + target + "&start_port=" + port + "&end_port=" + port + "&normalScan=No&scan_type=connect&ping_type=none",
-  "method": "POST",
-  "mode": "cors",
-}).then(res => {
+
+            Proxy_Load_Balancer();
+
+            //if (LoadBalancerMem_2 == 1) {
+            //LoadBalancerMem_2 = 2
+            secs = ((Port_Count) * 800) / 1000
+            sleep(800)
+            fetch(Proxy + "?https://www.ipfingerprints.com/scripts/getPortsInfo.php", {
+                "headers": {
+                    "accept": "application/json, text/javascript, */*; q=0.01",
+                    "accept-language": "en-US,en;q=0.9",
+                    "content-type": "application/x-www-form-urlencoded",
+                    "sec-fetch-dest": "empty",
+                    "sec-fetch-mode": "cors",
+                    "sec-fetch-site": "same-origin",
+                    "sec-gpc": "1",
+                    "x-requested-with": "XMLHttpRequest"
+                },
+                "referrer": "https://www.ipfingerprints.com/portscan.php",
+                "referrerPolicy": "strict-origin-when-cross-origin",
+                "body": "remoteHost=" + target + "&start_port=" + port + "&end_port=" + port + "&normalScan=No&scan_type=connect&ping_type=none",
+                "method": "POST",
+                "mode": "cors",
+            }).then(res => {
                 // allows to read all headers (even forbidden headers like set-cookies)
                 const headers = JSON.parse(res.headers.get('cors-received-headers'))
                 return res.json()
             }).then(res => {
-				
-				rawjson = res
-				MAIN = (rawjson.portScanInfo).split("\" style=\"font-weight: bold;\">")[1]
+
+                rawjson = res
+                MAIN = (rawjson.portScanInfo).split("\" style=\"font-weight: bold;\">")[1]
                 portstatus = ((MAIN).split("</span>")[0]).trim()
-				PortService = (((MAIN).split("</span>")[1]).split("<br />")[0]).trim()
-					sleep(100)
-					var tmp = $("#result").val()
-					var tmpstr = port + "/tcp" + " : " + portstatus + " : " + PortService
-					$("#result").val(tmp + "\n" + tmpstr)
-					Ports_Displayed = Ports_Displayed + 1;
-					
-					if ((Ports_Displayed) == (Port_Count)) {
-						var tmp = $("#result").val()
-						console.log('done'); 
-						$("#result").val(tmp + "\n \nScan Complete. (" + secs + " sec.)");
-						inputtarget = $("input[name='ip']").val();
-						triggerInput(document.getElementById("result"))
-						document.getElementById("ScanDownload").style.display = 'inline';
-						}
+                PortService = (((MAIN).split("</span>")[1]).split("<br />")[0]).trim()
+                sleep(100)
+                var tmp = $("#result").val()
+                var tmpstr = port + "/tcp" + " : " + portstatus + " : " + PortService
+                $("#result").val(tmp + "\n" + tmpstr)
+                Ports_Displayed = Ports_Displayed + 1;
+
+                if ((Ports_Displayed) == (Port_Count)) {
+                    var tmp = $("#result").val()
+                    console.log('done');
+                    $("#result").val(tmp + "\n \nScan Complete. (" + secs + " sec.)");
+                    inputtarget = $("input[name='ip']").val();
+                    triggerInput(document.getElementById("result"))
+                    document.getElementById("ScanDownload").style.display = 'inline';
+                }
             })
-			//}
-			
-			/*
+            //}
+
+            /*
 			 LoadBalancerMem_2 = 1
 			 secs = ((Port_Count) * 400) / 1000
 			 sleep(400)
@@ -906,9 +1028,9 @@ function triggerInput(element) {
             }
 
             Proxy_Load_Balancer()
-			
-			document.getElementById("ScanDownload").style.display = 'none';
-			document.getElementById("InfoDownload").style.display = 'none';
+
+            document.getElementById("ScanDownload").style.display = 'none';
+            document.getElementById("InfoDownload").style.display = 'none';
             document.getElementById("map").style.display = 'none';
             document.getElementById("info").style.display = 'none';
             document.getElementById("result").style.display = 'none';
@@ -933,9 +1055,9 @@ function triggerInput(element) {
                         document.getElementById("info").style.display = 'inline';
                         document.getElementById("info").value = "";
                         document.getElementById("info").value = "-- IP/Domain Geo-Info --" + "\n \n" + "Query: " + response.query + "\n" + "Continent: " + response.continent + " | Code: " + response.continentCode + "\n" + "Country: " + response.country + " | Code: " + response.countryCode + "\n" + "RegionName: " + response.regionName + " | Code: " + response.region + "\n" + "City: " + response.city + " | Code: " + response.zip + "\n" + "Coordinates: " + "Lat (" + response.lat + ") | Lon (" + response.lon + ")" + "\n" + "TimeZone: " + response.timezone + "\n" + "Offset: " + response.offset + "\n" + "Currency: " + response.currency + "\n" + "ISP: " + response.isp + "\n" + "Org: " + response.org + "\n" + "As: " + response.as + "\n" + "Reverse: " + response.reverse + "\n" + "Mobile: " + response.mobile + "\n" + "Proxy: " + response.proxy + "\n" + "Hosting: " + response.hosting
-						inputtarget = $("input[name='ip']").val();
-						triggerInput(document.getElementById("info"))
-						document.getElementById("InfoDownload").style.display = 'inline';
+                        inputtarget = $("input[name='ip']").val();
+                        triggerInput(document.getElementById("info"))
+                        document.getElementById("InfoDownload").style.display = 'inline';
                     }
                     //map start
                     if (mode == 'Visual NS Map') {
@@ -967,8 +1089,8 @@ function triggerInput(element) {
                     }
 
                     if (mode == 'Port Scan') {
-					
-						Ports_Displayed = 0;
+
+                        Ports_Displayed = 0;
                         document.getElementById("result").style.display = 'inline';
                         document.getElementById("result").value = "";
                         FormatScan(ipapi, $("input[name='port']").val());
@@ -1040,20 +1162,20 @@ function triggerInput(element) {
             if (UniquePlist.length !== 0) {
                 document.getElementById("result").value = "-- IP/Domain Port Scan --" + "\n \n" + "Starting Scan (Mixed Servers) at " + dateandtime + "\n \n The HMTL Site Will Be Frozen While The Scan Is Loading. \n If you would like to make sure it's running and not dead, \n you can Right Click and open the 'Inspect' menu, \n then open the 'Network' tab to see the live scan activity \n Do the above before running the scan. \n If you are prompted to 'Wait' or 'Exit Page', Click 'Wait'. \n\n Once this message clears, the site will be responsive, \n But the scan report might still be populating. \n\n PLEASE WAIT...";
                 Port_Count_Raw = UniquePlist.length;
-				Port_Count = Port_Count_Raw;
-				console.log(UniquePlist)
+                Port_Count = Port_Count_Raw;
+                console.log(UniquePlist)
                 setTimeout(() => {
 
                     for (var i in UniquePlist) {
                         if (UniquePlist[i] != "") {
                             PortScan(ip, UniquePlist[i]);
-                         
+
 
                         }
                     }
-				
+
                     document.getElementById("result").value = "-- IP/Domain Port Scan --" + "\n \n" + "Starting Scan (networkappers.com) at " + dateandtime + " \n\nScan report for:" + reportdomain + " (" + ip + ") \n\n [ PORT : STATE : SERVICE ] \n";
-					
+
                     if (document.getElementById('result').clientHeight < document.getElementById('result').scrollHeight) {
                         document.getElementById('result').style.height = document.getElementById('result').scrollHeight + 'px'
                     }
@@ -1066,7 +1188,6 @@ function triggerInput(element) {
             }
         }
     </script>
-
 </body>
 
 </html>
